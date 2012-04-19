@@ -62,11 +62,14 @@ void setup() {
   //initGPS();
   //initEeprom();
   //initRadio();
+  //initBuzzer();
   
   setTestValues();
 }
 
 void loop() {
+  unsigned long loopTime = millis();
+  
   //readBarometerBMP();
   //readGPS();
   //readEeprom();
@@ -83,28 +86,24 @@ void loop() {
   //while(Serial.available())
   //  Serial.write(Serial.read());
   
+  if(debug())
+    return;
+  
   // Send the telemetry packet
   // Checks if telemetry is enabled and if it's been long enough since the previous
   // packet was transmitted.
   if(telemetryActive && (millis() - lastTelemetryTransmission) > TELEMETRY_INTERVAL) {
     assembleTelemetryPacket();
+    logPacket();
     sendPacket();
   }
   
   delay(100);
-}
-
-void setTestValues() {
-   time = 6121501;
-   date = 41812;
-   altitudeGps = 120;
-   latitude = -10;
-   longitude = 12;
-   satellites = 9;
-   pressure = 101325;
-   altitudeBaro = 125;
-   temperature = 235;
-   voltage = 621;
+  
+  loopTime = millis() - loopTime;
+  Serial.print("Loop time: ");
+  Serial.print(loopTime);
+  Serial.println("ms");
 }
 
 /*
