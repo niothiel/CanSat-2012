@@ -60,27 +60,6 @@ void readBarometerBMP()
   
   calculateAltitude();
   calculateAltitude2();
-  
-  // print table of altitude, pressures, and temperatures to console
-  /*Serial.print("BMP-085 | ");
-  Serial.print(pressure, 1);
-  Serial.print(" Pa | ");
-  
-  // At a res of -5.35 counts/°C, digits lower than 0.1°C are not significant
-  Serial.print(temperature, 1);
-  Serial.print(" C");
-  
-  Serial.println();*/
-  
-  /*
-  Serial.print("Temperature: ");
-  Serial.print(temperature, DEC);
-  Serial.println(" *0.1 deg C");
-  Serial.print("Pressure: ");
-  Serial.print(pressure, DEC);
-  Serial.println(" Pa");
-  Serial.println();
-  */
 }
 
 void calculateAltitude() {
@@ -100,6 +79,23 @@ void calculateAltitude2() {
   altitudeBaro = (long)(100 * temp);
   Serial.print("Calculated Absolute Altitude 2: ");
   Serial.println(temp);
+}
+
+void printBarometerReading() {
+  // Grab new values just in case.
+  readBarometerBMP();
+  
+  // print table of altitude, pressures, and temperatures to console
+  Serial.print("BMP-085 | ");
+  Serial.print(pressure, 1);
+  Serial.print(" Pa | ");
+  
+  float fTemp = (float)temperature / 10;
+  // At a res of -5.35 counts/°C, digits lower than 0.1°C are not significant
+  Serial.print(fTemp);
+  Serial.print(" C");
+  
+  Serial.println();
 }
 
 // Stores all of the bmp085's calibration values into global variables
