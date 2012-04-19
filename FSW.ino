@@ -65,6 +65,10 @@ void setup() {
   //initBuzzer();
   
   setTestValues();
+  Serial.println("Setup is finished.");
+  Serial.println("NOTE: Debugging functionality is enabled.");
+  Serial.println("To enter debug mode, type \"d\" into the serial monitor.");
+  delay(1000);
 }
 
 void loop() {

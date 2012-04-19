@@ -22,30 +22,50 @@ boolean debug() {
     
     switch(c) {
       case 'd':
-        Serial.println("Debugging mode enabled.");
-        showHelp();
-        debugEnabled = true;
+        if(!debugEnabled) {
+          Serial.println("Debugging mode enabled.");
+          showHelp();
+          debugEnabled = true;
+        }
         break;
       case 'x':
-        Serial.println("Debugging mode disabled.");
-        debugEnabled = false;
-        delay(2000);
+        if(debugEnabled) {
+          Serial.println("Debugging mode disabled.");
+          debugEnabled = false;
+          delay(2000);
+        }
         break;
+    }
+    
+    if(!debugEnabled)
+      return debugEnabled;
+    
+    switch(c) {
       case 'a':
         Serial.println("Here are a few readings of the barometer:");
         for(int x = 0; x < 5; x++) {
-          printBarometerReading();
+          //printBarometerReading();
           delay(20);
         }
         break;
       case 'b':
         testBuzzer();
         break;
+      case 'e':
+        Serial.println("Testing eeprom.");
+        testEeprom();
+        break;
       case 'g':
         testGps();
         break;
+      case 'r':
+        Serial.println("Dumping eeprom.");
+        dumpEeprom();
+        break;
       case 's':
+        Serial.println("Testing servo.");
         testServo();
+        break;
       default:
         Serial.print("Unrecognized character: ");
         Serial.println(c);
@@ -57,11 +77,20 @@ boolean debug() {
 
 void showHelp() {
   Serial.println("The following commands are valid:");
-  Serial.println("a             - Show a few lines of altimeter output.");
-  Serial.println("b             - Toggles the buzzer.");
-  Serial.println("g             - Show some GPS output.");
-  Serial.println("s             - Toggles the servo between the two positions");
-  Serial.println("x             - Exits debug mode.");
+  delay(150);
+  Serial.println("a - Show a few lines of altimeter output.");
+  delay(150);
+  Serial.println("b - Toggles the buzzer.");
+  delay(150);
+  Serial.println("e - Tests EEPROM r/w functionality. WARNING: Will erase data.");
+  delay(150);
+  Serial.println("g - Show some GPS output.");
+  delay(150);
+  Serial.println("r - Retrieves EEPROM data and prints it into the terminal for PFR Retrieval.");
+  delay(150);
+  Serial.println("s - Toggles the servo between the two positions");
+  delay(150);
+  Serial.println("x - Exits debug mode.");
 }
 
 void testBuzzer() {
@@ -91,4 +120,12 @@ void testServo() {
 
 void testGps() {
   printGPSData();
+}
+
+void dumpEeprom() {
+  Serial.println("Dumping Eeprom values:");
+}
+
+void testEeprom() {
+  Serial.println("Testing Eeprom. You should see the phrase \"EEPROM Test successful.\"");
 }
