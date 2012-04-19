@@ -10,6 +10,8 @@
 
 #include <Wire.h> //I2C library
 
+unsigned int currentEEAddress = 0;
+
 void i2c_eeprom_write_byte( int deviceaddress, unsigned int eeaddress, byte data ) {
   int rdata = data;
   Wire.beginTransmission(deviceaddress);
@@ -63,6 +65,27 @@ void initEeprom()
   delay(10); //add a small delay
 
   Serial.println("Memory written");
+}
+
+// Logs the current telemetry packet to the EEPROM.
+// Keeps track of the current address
+void logPacket() {
+  return;
+  Serial.println("Logging packet to EEPROM...");
+  
+  for(int x = 0; x < strlen(packetBuffer); x++) {
+    Serial.print("Data: ");
+    Serial.print( (char)packetBuffer[x]);
+    Serial.print("    Addr: ");
+    Serial.println(currentEEAddress);
+    
+//    i2c_eeprom_write_byte( 0x50, currentEEAddress, (byte) packetBuffer[x]);
+//    delay(1);
+
+    currentEEAddress++;
+  }
+  
+  Serial.println("Logging finished...");
 }
 
 void readEeprom() 
