@@ -18,19 +18,27 @@ void readGPS() {
       altitudeGps = gps.altitude();
       satellites = gps.satellites();      
       
-      Serial.print("Longitude: ");
-      Serial.println(longitude);
-      Serial.print("Latitude: ");
-      Serial.println(latitude);
-      Serial.print("Satellites: ");
-      Serial.println(satellites);
-      Serial.print("Altitude: ");
-      Serial.println(altitudeGps);
-      
-      Serial.print("Date: ");
-      Serial.println(date);
-      Serial.print("Time: ");
-      Serial.println(time);
+      printGPSData();
     }
   }
+}
+
+void printGPSData() {
+  
+  Serial.print("Longitude: ");
+  Serial.println(longitude);
+  Serial.print("Latitude: ");
+  Serial.println(latitude);
+  Serial.print("Satellites: ");
+  Serial.println(satellites);
+  Serial.print("Altitude: ");
+  Serial.println(altitudeGps);
+  Serial.print("Fix age: ");
+  Serial.print(fix_age);
+  Serial.println("ms");
+  
+  Serial.print("Date: ");
+  Serial.println(date);
+  Serial.print("Time: ");
+  Serial.println(time);
 }
