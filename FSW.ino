@@ -3,6 +3,21 @@
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
 
+/*
+Our wonderful Flight Software for CanSat Competition 2012!
+
+Written by:
+  Val Komarov
+  Avinash Desai
+  
+The code has been posted online, it's located at:
+https://github.com/niothiel/CanSat-2012
+
+More information about the competition can be found at:
+http://cansatcompetition.com/Main.html
+
+*/
+
 // Global sensor values
 
 // Altimeter
