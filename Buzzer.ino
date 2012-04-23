@@ -1,8 +1,8 @@
-#define BUZZER_PIN 10
+#define BUZZER_PIN 9
 #define FREQUENCY 2000
 
 void initBuzzer() {
-  //pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
 }
 
 void turnBuzzerOn() {
