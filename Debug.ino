@@ -1,7 +1,7 @@
 boolean debugEnabled = false;
 
 boolean buzzerOn = false;
-boolean servoOpen = false;
+boolean isServoOpen = false;
 
 void setTestValues() {
    time = 6121501;
@@ -108,7 +108,7 @@ void testBuzzer() {
 
 void testServo() {
   Serial.println("Testing servo in function.");
- if(servoOpen) {
+ if(isServoOpen) {
     servoClose();
     Serial.println("Servo closed");
   }
@@ -116,7 +116,7 @@ void testServo() {
     servoOpen();
     Serial.println("Servo open");
   }
-  servoOpen = !servoOpen;
+  isServoOpen = !isServoOpen;
 }
 
 void testGps() {
