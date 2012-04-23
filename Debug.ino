@@ -110,11 +110,11 @@ void testServo() {
   Serial.println("Testing servo in function.");
  if(servoOpen) {
     servoClose();
-    Serial.println("Servo in position 1");
+    Serial.println("Servo closed");
   }
   else {
     servoOpen();
-    Serial.println("Servo in position 2");
+    Serial.println("Servo open");
   }
   servoOpen = !servoOpen;
 }
