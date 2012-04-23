@@ -2,6 +2,7 @@
 #include <Wire.h>
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
+#include <Servo.h>
 
 /*
 Our wonderful Flight Software for CanSat Competition 2012!
@@ -39,7 +40,7 @@ unsigned long time_age;     // Age in milliseconds
 long voltage;               // Voltage in 100th of a Volt
 
 // Radio Packet Buffer
-int packetNumber = 0;
+unsigned int packetNumber = 0;
 char packetBuffer[80];
 
 // Flight control variables
@@ -58,11 +59,12 @@ void setup() {
   Wire.begin();
   
   // Initialize External Electronics
-  //initBarometerBMP();
-  //initGPS();
-  //initEeprom();
-  //initRadio();
-  //initBuzzer();
+  initBarometerBMP();
+  initGPS();
+  initEeprom();
+  initRadio();
+  initBuzzer();
+  initServo();
   
   setTestValues();
   Serial.println("Setup is finished.");
@@ -105,9 +107,9 @@ void loop() {
   delay(100);
   
   loopTime = millis() - loopTime;
-  Serial.print("Loop time: ");
-  Serial.print(loopTime);
-  Serial.println("ms");
+  //Serial.print("Loop time: ");
+  //Serial.print(loopTime);
+  //Serial.println("ms");
 }
 
 /*
