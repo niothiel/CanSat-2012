@@ -78,7 +78,7 @@ void sendPacket() {
   //digitalWrite(RADIO_SLEEP_PIN, LOW);
   delay(15);
   
-  //radio.print(packetBuffer);
+  radio.print(packetBuffer);
   Serial.println(packetBuffer);
   
   // Set the time that we last sent the packet

@@ -7,9 +7,6 @@
   * 
   *   
   */
-
-#include <Wire.h> //I2C library
-
 unsigned int currentEEAddress = 0;
 
 void i2c_eeprom_write_byte( int deviceaddress, unsigned int eeaddress, byte data ) {

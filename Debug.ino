@@ -64,11 +64,10 @@ boolean debug() {
       }
     }
     else if(c == 'b') {
-      //testsomething();
       testBuzzer();
     }
     else if(c == 'e') {
-      Serial.println("Testing eeprom.");
+      Serial.println("Testing eeprom");
       testEeprom();
     }
     else if(c == 'g') {
@@ -79,12 +78,11 @@ boolean debug() {
     }
     else if(c == 'r') {
       dumpEeprom();
-      Serial.println("Dumping eeprom.");
+      Serial.println("Dumping eeprom");
     }
-    else if(c == 'z') {
-      Serial.println("Testing servo.");
-      testsomething();
-      Serial.println("Testing servo. after..");
+    else if(c == 's') {
+      Serial.println("Testing servo");
+      testServo();
     }
     else {
       Serial.print("Unknown char: ");
@@ -109,7 +107,8 @@ void testBuzzer() {
 }
 
 void testServo() {
-  if(servoPos) {
+  Serial.println("Testing servo in function.");
+ if(servoPos) {
     servoPos1();
     Serial.println("Servo in position 1");
   }
@@ -121,12 +120,12 @@ void testServo() {
 }
 
 void testGps() {
-  Serial.println("Here's the last known GPS data.");
+  Serial.println("GPS");
   printGPSData();
 }
 
 void dumpEeprom() {
-  Serial.println("Dumping Eeprom values:");
+  Serial.println("Dumping Eeprom values");
 }
 
 void testEeprom() {
