@@ -17,21 +17,21 @@ void setTestValues() {
 }
 
 void showHelp() {
-  Serial.println("The following commands are valid:");
+  Serial.println("Commands:");
   delay(250);
-  Serial.println("a) Show a few lines of altimeter output.");
+  Serial.println("a) Altimeter");
   delay(250);
-  Serial.println("b) Toggles the buzzer.");
+  Serial.println("b) Buzzer");
   delay(250);
-  Serial.println("e) Tests EEPROM r/w functionality. WARNING: Will erase data.");
+  Serial.println("e) EEPROM");
   delay(250);
-  Serial.println("g) Show some GPS output.");
+  Serial.println("g) GPS");
   delay(250);
-  Serial.println("r) Retrieves EEPROM data and prints it into the terminal for PFR Retrieval.");
+  Serial.println("r) Retrieve EEPROM data");
   delay(250);
-  Serial.println("s) Toggles the servo between the two positions");
+  Serial.println("s) Servo");
   delay(250);
-  Serial.println("x) Exits debug mode.");
+  Serial.println("x) Exit");
 }
 
 boolean debug() {
@@ -39,14 +39,13 @@ boolean debug() {
     char c = Serial.read();
     
     if(!debugEnabled && c == 'd') {
-      Serial.println("Debugging mode enabled.");
-      Serial.println("Type \"x\" to leave debug mode.");
+      Serial.println("Debug enabled");
       showHelp();
       debugEnabled = true;
       return debugEnabled;
     }
     else if(debugEnabled && c == 'x') {
-      Serial.println("Debugging mode disabled.");
+      Serial.println("Debug disabled");
       debugEnabled = false;
       delay(2000);
       return debugEnabled;
@@ -58,13 +57,14 @@ boolean debug() {
       return debugEnabled;
     
     if(c == 'a') {
-      Serial.println("Here are a few readings of the barometer:");
+      Serial.println("Barometer:");
       for(int x = 0; x < 5; x++) {
         //printBarometerReading();
         delay(20);
       }
     }
     else if(c == 'b') {
+      //testsomething();
       testBuzzer();
     }
     else if(c == 'e') {
@@ -81,12 +81,13 @@ boolean debug() {
       dumpEeprom();
       Serial.println("Dumping eeprom.");
     }
-    else if(c == 's') {
+    else if(c == 'z') {
       Serial.println("Testing servo.");
-      testServo();
+      testsomething();
+      Serial.println("Testing servo. after..");
     }
     else {
-      Serial.print("Unrecognized character: ");
+      Serial.print("Unknown char: ");
       Serial.println(c);
     }
   }
@@ -97,11 +98,11 @@ boolean debug() {
 void testBuzzer() {
   if(buzzerOn) {
     turnBuzzerOff();
-    Serial.println("Buzzer has been turned off.");
+    Serial.println("Buzzer off");
   }
   else {
     turnBuzzerOn();
-    Serial.println("Buzzer has been turned on.");
+    Serial.println("Buzzer on");
   }
     
   buzzerOn = !buzzerOn;
@@ -129,5 +130,5 @@ void dumpEeprom() {
 }
 
 void testEeprom() {
-  Serial.println("Testing Eeprom. You should see the phrase 'EEPROM Test successful.'");
+  Serial.println("Testing Eeprom");
 }
