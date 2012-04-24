@@ -20,6 +20,8 @@ http://cansatcompetition.com/Main.html
 */
 
 // Global sensor values
+unsigned long lastSensorRead = 0;
+#define SENSOR_READ_INTERVAL 450
 
 // Altimeter
 short temperature;          // Temperature in 10th of a degree Celsius
@@ -41,7 +43,7 @@ long voltage;               // Voltage in 100th of a Volt
 
 // Radio Packet Buffer
 unsigned int packetNumber = 0;
-char packetBuffer[80];
+char packetBuffer[70];
 
 // Flight control variables
 boolean telemetryActive = true;
@@ -59,26 +61,30 @@ void setup() {
   Wire.begin();
   
   // Initialize External Electronics
-  initBarometerBMP();
-  initGPS();
-  initEeprom();
-  initRadio();
-  initBuzzer();
-  initServo();
+  //initBarometerBMP();
+  //initGPS();
+  //initEeprom();
+  //initRadio();
+  //initBuzzer();
+  //initServo();
+  //initBattery();
   
   setTestValues();
   Serial.println("Setup is finished.");
-  Serial.println("NOTE: Debugging functionality is enabled.");
-  Serial.println("To enter debug mode, type \"d\" into the serial monitor.");
-  delay(1000);
+  Serial.println("Type \"d\" to enter debug mode.");
+  delay(500);
 }
 
 void loop() {
   unsigned long loopTime = millis();
   
-  //readBarometerBMP();
-  //readGPS();
-  //readEeprom();
+  // Read the sensors every 0.5s
+  if( (millis() - lastSensorRead) > SENSOR_READ_INTERVAL) {
+    readBarometerBMP();
+    readGPS();
+    readBatteryVoltage();
+    //readEeprom();
+  }
   
   // Radio in loopback
   //while(radio.available())
@@ -100,7 +106,7 @@ void loop() {
   // packet was transmitted.
   if(telemetryActive && (millis() - lastTelemetryTransmission) > TELEMETRY_INTERVAL) {
     assembleTelemetryPacket();
-    logPacket();
+    //logPacket();
     sendPacket();
   }
   
