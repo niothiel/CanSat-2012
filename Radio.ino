@@ -65,6 +65,8 @@ void assembleTelemetryPacket2() {
 }
 */
 
+// TODO: Hookup radio sleep pins and make sure it works
+// to save power.
 void initRadio() {
   // Initialize Radio I/O
   radio.begin(9600);
