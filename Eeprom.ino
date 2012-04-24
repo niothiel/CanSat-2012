@@ -68,6 +68,7 @@ void initEeprom()
 // Keeps track of the current address
 void logPacket() {
   return;
+  
   Serial.println("Logging packet to EEPROM...");
   
   for(int x = 0; x < strlen(packetBuffer); x++) {
@@ -83,6 +84,14 @@ void logPacket() {
   }
   
   Serial.println("Logging finished...");
+}
+
+void dumpEeprom() {
+  Serial.println("Dumping Eeprom values");
+}
+
+void testEeprom() {
+  Serial.println("Testing Eeprom");
 }
 
 void readEeprom() 
