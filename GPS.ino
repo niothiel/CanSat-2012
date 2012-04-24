@@ -24,7 +24,7 @@ void readGPS() {
 }
 
 void printGPSData() {
-  
+  Serial.println("GPS");
   Serial.print("Longitude: ");
   Serial.println(longitude);
   Serial.print("Latitude: ");
