@@ -83,7 +83,7 @@ void calculateAltitude2() {
 
 void printBarometerReading() {
   // Grab new values just in case.
-  readBarometerBMP();
+  //readBarometerBMP();
   
   // print table of altitude, pressures, and temperatures to console
   Serial.print("BMP-085 | ");
@@ -93,7 +93,11 @@ void printBarometerReading() {
   float fTemp = (float)temperature / 10;
   // At a res of -5.35 counts/°C, digits lower than 0.1°C are not significant
   Serial.print(fTemp);
-  Serial.print(" C");
+  Serial.print(" C | ");
+  
+  float fAltitude = (float)altitudeBaro / 100;
+  Serial.print(fAltitude);
+  Serial.print(" m");
   
   Serial.println();
 }
