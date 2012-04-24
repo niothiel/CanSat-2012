@@ -18,19 +18,21 @@ void setTestValues() {
 
 void showHelp() {
   Serial.println("Commands:");
-  delay(250);
+  delay(100);
   Serial.println("a) Altimeter");
-  delay(250);
+  delay(100);
   Serial.println("b) Buzzer");
-  delay(250);
+  delay(100);
   Serial.println("e) EEPROM");
-  delay(250);
+  delay(100);
   Serial.println("g) GPS");
-  delay(250);
+  delay(100);
+  Serial.println("p) Battery Voltage");
+  delay(100);
   Serial.println("r) Retrieve EEPROM data");
-  delay(250);
+  delay(100);
   Serial.println("s) Servo");
-  delay(250);
+  delay(100);
   Serial.println("x) Exit");
 }
 
@@ -47,7 +49,7 @@ boolean debug() {
     else if(debugEnabled && c == 'x') {
       Serial.println("Debug disabled");
       debugEnabled = false;
-      delay(2000);
+      delay(1000);
       return debugEnabled;
     }
     
@@ -67,21 +69,21 @@ boolean debug() {
       testBuzzer();
     }
     else if(c == 'e') {
-      Serial.println("Testing eeprom");
       testEeprom();
     }
     else if(c == 'g') {
-      testGps();
+      printGPSData();
     }
     else if(c == 'h') {
       showHelp();
     }
+    else if(c == 'p') {
+      printBatteryVoltage();
+    }
     else if(c == 'r') {
       dumpEeprom();
-      Serial.println("Dumping eeprom");
     }
     else if(c == 's') {
-      Serial.println("Testing servo");
       testServo();
     }
     else {
@@ -107,7 +109,6 @@ void testBuzzer() {
 }
 
 void testServo() {
-  Serial.println("Testing servo in function.");
  if(isServoOpen) {
     servoClose();
     Serial.println("Servo closed");
@@ -117,17 +118,4 @@ void testServo() {
     Serial.println("Servo open");
   }
   isServoOpen = !isServoOpen;
-}
-
-void testGps() {
-  Serial.println("GPS");
-  printGPSData();
-}
-
-void dumpEeprom() {
-  Serial.println("Dumping Eeprom values");
-}
-
-void testEeprom() {
-  Serial.println("Testing Eeprom");
 }
