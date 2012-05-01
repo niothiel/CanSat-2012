@@ -27,7 +27,7 @@
 
 #define BMP085_ADDRESS 0x77  // I2C address of BMP085
 
-const unsigned char OSS = 0;  // Oversampling Setting
+const unsigned char OSS = 2;  // Oversampling Setting
 
 // Calibration values
 int ac1;
@@ -67,8 +67,8 @@ void calculateAltitude() {
   // Absolute Altitude = 44330 * (1 - (p / p0) ^ (1 / 5.255))
   double temp = 44330 * (1 - pow(pressure / 101325.0f, 0.1902949));
   altitudeBaro = (long)(100 * temp);
-  Serial.print("Calculated Absolute Altitude 1: ");
-  Serial.println(temp);
+  //Serial.print("Calculated Absolute Altitude 1: ");
+  //Serial.println(temp);
 }
 
 void calculateAltitude2() {
@@ -76,9 +76,9 @@ void calculateAltitude2() {
   // http://www.americanwx.com/bb/index.php/topic/32918-temp-and-pressure-at-altitude-equation/
   // Delta H = (R * T) / g * ln(p1 / p2)
   double temp = 29.2558613 * temperature / 10 * log(pressure / 101325.0f);
-  altitudeBaro = (long)(100 * temp);
-  Serial.print("Calculated Absolute Altitude 2: ");
-  Serial.println(temp);
+  altitudeBaro2 = (long)(100 * temp);
+  //Serial.print("Calculated Absolute Altitude 2: ");
+  //Serial.println(temp);
 }
 
 void printBarometerReading() {
@@ -96,6 +96,10 @@ void printBarometerReading() {
   Serial.print(" C | ");
   
   float fAltitude = (float)altitudeBaro / 100;
+  Serial.print(fAltitude);
+  Serial.print(" m | ");
+  
+  fAltitude = (float)altitudeBaro2 / 100;
   Serial.print(fAltitude);
   Serial.print(" m");
   
