@@ -22,11 +22,14 @@ http://cansatcompetition.com/Main.html
 // Global sensor values
 unsigned long lastSensorRead = 0;
 #define SENSOR_READ_INTERVAL 450
+unsigned long lastBaroRead = 0;
+#define BARO_READ_INTERVAL 90
 
 // Altimeter
 short temperature;          // Temperature in 10th of a degree Celsius
 long pressure;              // Pressure in Pa
 long altitudeBaro;          // Altitude in centimeters
+long altitudeBaro2;         // Altitude in centimeters
 
 // GPS
 long latitude;              // Latitude in hundred thousandths of a degree
@@ -45,10 +48,17 @@ long voltage;               // Voltage in 100th of a Volt
 unsigned int packetNumber = 0;
 char packetBuffer[70];
 
-// Flight control variables
+// Flight Control
+#define S_STANDBY 0
+#define S_DESCENDING 1
+#define S_DEPLOYED 2
+#define S_LANDED 3
+unsigned short flightState = 0;
+
+// Telemetry
 boolean telemetryActive = true;
 unsigned long lastTelemetryTransmission = 0;
-#define TELEMETRY_INTERVAL 1900
+#define TELEMETRY_INTERVAL 1000
 
 void setup() {
   // Initialize Serial I/O
@@ -61,11 +71,11 @@ void setup() {
   Wire.begin();
   
   // Initialize External Electronics
-  //initBarometerBMP();
+  initBarometerBMP();
   //initGPS();
-  //initEeprom();
-  //initRadio();
-  //initBuzzer();
+  initEeprom();
+  initRadio();
+  initBuzzer();
   //initServo();
   //initBattery();
   
@@ -76,27 +86,22 @@ void setup() {
 }
 
 void loop() {
-  unsigned long loopTime = millis();
+  //unsigned long loopTime = millis();
+  
+  // We will need to read our barometer faster than the other sensors
+  // so we put it into a different location
+  if( (millis() - lastBaroRead) > BARO_READ_INTERVAL) {
+    readBarometerBMP();
+    lastBaroRead = millis();
+  }
   
   // Read the sensors every 0.5s
   if( (millis() - lastSensorRead) > SENSOR_READ_INTERVAL) {
-    readBarometerBMP();
-    readGPS();
-    readBatteryVoltage();
+    //readGPS();
+    //readBatteryVoltage();
     //readEeprom();
+    lastSensorRead = millis();
   }
-  
-  // Radio in loopback
-  //while(radio.available())
-  //  Serial.write(radio.read());
-  
-  // Radio out loopback
-  //while(Serial.available())
-  //  radio.write(Serial.read());
-  
-  // Serial Loopback
-  //while(Serial.available())
-  //  Serial.write(Serial.read());
   
   if(debug())
     return;
@@ -106,13 +111,13 @@ void loop() {
   // packet was transmitted.
   if(telemetryActive && (millis() - lastTelemetryTransmission) > TELEMETRY_INTERVAL) {
     assembleTelemetryPacket();
-    //logPacket();
+    logPacket();
     sendPacket();
   }
   
-  delay(100);
+  delay(25);
   
-  loopTime = millis() - loopTime;
+  //loopTime = millis() - loopTime;
   //Serial.print("Loop time: ");
   //Serial.print(loopTime);
   //Serial.println("ms");
