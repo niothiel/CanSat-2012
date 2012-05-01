@@ -1,6 +1,6 @@
 #define RADIO_SLEEP_PIN 6
 
-SoftwareSerial radio(4,5);
+SoftwareSerial radio(6,7);
 
 /**
 Telemetry format is as follows:
@@ -82,6 +82,11 @@ void sendPacket() {
   
   radio.print(packetBuffer);
   Serial.println(packetBuffer);
+  /*for(int x = 0; x < sizeof(packetBuffer); x++) {
+    radio.print(packetBuffer[x]);
+    Serial.print(packetBuffer[x]);
+    delay(2);
+  }*/
   
   // Set the time that we last sent the packet
   lastTelemetryTransmission = millis();
