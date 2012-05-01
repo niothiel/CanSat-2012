@@ -61,7 +61,8 @@ boolean debug() {
     if(c == 'a') {
       Serial.println("Barometer:");
       for(int x = 0; x < 5; x++) {
-        //printBarometerReading();
+        readBarometerBMP();
+        printBarometerReading();
         delay(20);
       }
     }
